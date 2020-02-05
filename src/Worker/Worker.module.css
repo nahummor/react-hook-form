@@ -1,0 +1,39 @@
+.workerForm {
+   border: 1px solid black;
+   border-radius: 5px;
+   margin: 1rem;
+}
+
+.addWorkerForm {
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+}
+
+.formLabel {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   flex-basis: 10%;
+}
+
+.formItem {
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   /* flex-basis: 33%; */
+}
+
+button {
+   align-self: flex-end;
+}
+
+/* input {
+   width: 100%;
+} */
+
+@media (max-width: 900px) {
+   .formLabel {
+      flex-basis: 20%;
+   }
+}
