@@ -90,7 +90,7 @@ const Student = () => {
                            {errors.lastName.message}
                         </FormHelperText>
                      ) : (
-                        <FormHelperText id='txtLastName-text'> </FormHelperText>
+                        <FormHelperText id='txtLastName-text'>{' '}</FormHelperText>
                      )}
                   </FormControl>
                   <FormControl>

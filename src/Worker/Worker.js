@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import classes from './Worker.module.css';
+
+import FocusInput from '../Shared/hoc/FocusInput';
 
 const Worker = () => {
    const { register, handleSubmit, watch, errors, formState } = useForm({
@@ -14,6 +16,13 @@ const Worker = () => {
    // watch input value by passing the name of it
    console.log(watch('firstName'));
 
+   useEffect(() => {
+      console.log('Worker Component Start.....');
+      return () => {
+         console.log('Worker Component Done.....');
+      };
+   }, []);
+
    return (
       <form onSubmit={handleSubmit(onSubmit)} className={classes.workerForm}>
          <h3>New Worker</h3>
@@ -25,10 +34,12 @@ const Worker = () => {
                <label>Job Title: </label>
             </div>
             <div className={classes.formItem}>
-               <input
-                  name='firstName'
-                  ref={register({ required: true, minLength: 2 })}
-               />
+               <FocusInput>
+                  <input
+                     name='firstName'
+                     ref={register({ required: true, minLength: 2 })}
+                  />
+               </FocusInput>
                {errors.firstName && errors.firstName.type === 'required' && (
                   <p>שדה חובה</p>
                )}

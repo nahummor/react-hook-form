@@ -1,6 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { BrowserRouter } from 'react-router-dom';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import App from './App';
+import './index.css';
+
+const index = (
+   <BrowserRouter>
+      <App />
+   </BrowserRouter>
+);
+
+ReactDOM.render(index, document.getElementById('root'));
