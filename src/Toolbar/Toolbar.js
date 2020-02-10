@@ -14,9 +14,6 @@ const Toolbar = () => {
          <NavLink activeClassName={classes.active} exact to='/form1'>
             Form 1
          </NavLink>
-         <NavLink activeClassName={classes.active} exact to='/form1'>
-            Form 1
-         </NavLink>
          <NavLink activeClassName={classes.active} exact to='/form2'>
             Form 2
          </NavLink>
