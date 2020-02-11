@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import classes from './Form1.module.css';
 
 import FocusInput from '../Shared/hoc/FocusInput';
+import CitiesList from '../Shared/UI/CitiesList/CitiesList';
 
 /**
  * manage form state by useState
@@ -12,6 +13,7 @@ const Form1 = () => {
    const [petName, setPetName] = useState('');
    const [petType, setPetType] = useState('');
    const [places, setPlaces] = useState([]);
+   const [city, setCity] = useState('');
    const [deletePlace, setDeletePlace] = useState(false);
 
    useEffect(() => {
@@ -34,7 +36,8 @@ const Form1 = () => {
       const petObject = {
          petName: petName,
          petType: petType,
-         petPlaces: places
+         petPlaces: places,
+         city: city
       };
       console.log('Pet: ', petObject);
    };
@@ -58,6 +61,10 @@ const Form1 = () => {
       updatedPlaces.splice(index, 1);
       setPlaces(updatedPlaces);
       setDeletePlace(true);
+   };
+
+   const onCityChangeHandler = city => {
+      setCity(city);
    };
 
    const placesEl = places.map((place, index) => {
@@ -106,6 +113,10 @@ const Form1 = () => {
                   מיקום חדש
                </button>
                <button type='submit'>שמור</button>
+            </div>
+            <div></div>
+            <div>
+               <CitiesList onCityChangeHandler={onCityChangeHandler} />
             </div>
             <div></div>
             <div></div>

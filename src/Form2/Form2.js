@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useReducer, useContext } from 'react';
-import { AppContext } from '../Shared/Context/AppContext';
+import React, { useEffect, useRef, useReducer, useMemo } from 'react';
 
 import classes from './Form2.module.css';
 
 import FocusInput from '../Shared/hoc/FocusInput';
+import CitiesList from '../Shared/UI/CitiesList/CitiesList';
 
 const initialState = {
    petName: '',
@@ -62,8 +62,6 @@ const formReducer = (currentState, action) => {
 };
 
 const Form2 = () => {
-   const appContext = useContext(AppContext);
-   const { getCitiesList } = appContext;
    const inputPlaceRef = useRef();
    const [formState, dispatch] = useReducer(formReducer, initialState);
 
@@ -76,12 +74,14 @@ const Form2 = () => {
       };
    }, []);
 
-   //    useEffect(() => {
-   //       console.log(getCitiesList());
-   //    }, [getCitiesList]);
+   const sayHello = useMemo(() => {
+      console.log('say hello run');
+
+      return 'Hello ......';
+   }, []);
 
    useEffect(() => {
-      console.log(formState.deletePlace);
+      //   console.log(formState.deletePlace);
       if (formState.places.length > 0 && !formState.deletePlace) {
          // set focus on the last input element
          inputPlaceRef.current.focus();
@@ -141,17 +141,6 @@ const Form2 = () => {
       );
    });
 
-   /**
-    * create cities list
-    */
-   const cities = getCitiesList().map((city, index) => {
-      return (
-         <option key={index} value={city}>
-            {city}
-         </option>
-      );
-   });
-
    return (
       <form onSubmit={onFormSubmitHandler} className={classes.petForm}>
          <p>State manege with useReducer</p>
@@ -182,11 +171,7 @@ const Form2 = () => {
             />
             <label>Cite:</label>
             <div>
-               <select
-                  className={classes.citiesList}
-                  onChange={event => onCityChangeHandler(event.target.value)}>
-                  {cities}
-               </select>
+               <CitiesList onCityChangeHandler={onCityChangeHandler} />
             </div>
             <div className={classes.formAction}>
                <button type='button' onClick={onAddNewPlace}>
@@ -195,7 +180,7 @@ const Form2 = () => {
                <button type='submit'>שמור</button>
             </div>
             <div></div>
-            <div></div>
+            <div>{sayHello}</div>
             <div className={classes.places}>{placesEl}</div>
          </div>
       </form>
