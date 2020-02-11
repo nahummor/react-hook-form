@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { AppContext } from '../../Context/AppContext';
 import classes from './CitiesList.module.css';
 
@@ -9,13 +9,18 @@ const CitiesList = props => {
    /**
     * create cities list
     */
-   const cities = getCitiesList().map((city, index) => {
-      return (
-         <option key={index} value={city}>
-            {city}
-         </option>
-      );
-   });
+   const cities = useMemo(() => {
+      console.log('create city list........');
+      return getCitiesList().map((city, index) => {
+         return (
+            <option key={index} value={city}>
+               {city}
+            </option>
+         );
+      });
+   }, [getCitiesList]);
+
+   console.log('Create city list component .........');
 
    return (
       <select
@@ -26,4 +31,4 @@ const CitiesList = props => {
    );
 };
 
-export default CitiesList;
+export default React.memo(CitiesList);

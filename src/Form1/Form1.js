@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import classes from './Form1.module.css';
 
 import FocusInput from '../Shared/hoc/FocusInput';
@@ -63,9 +63,9 @@ const Form1 = () => {
       setDeletePlace(true);
    };
 
-   const onCityChangeHandler = city => {
+   const onCityChangeHandler = useCallback(city => {
       setCity(city);
-   };
+   }, []);
 
    const placesEl = places.map((place, index) => {
       return (
@@ -114,7 +114,7 @@ const Form1 = () => {
                </button>
                <button type='submit'>שמור</button>
             </div>
-            <div></div>
+            <label>City: </label>
             <div>
                <CitiesList onCityChangeHandler={onCityChangeHandler} />
             </div>

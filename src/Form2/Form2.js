@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useReducer, useMemo } from 'react';
+import React, {
+   useEffect,
+   useRef,
+   useReducer,
+   useMemo,
+   useCallback
+} from 'react';
 
 import classes from './Form2.module.css';
 
@@ -110,9 +116,16 @@ const Form2 = () => {
       dispatch({ type: 'UPDATE_PLACE', index: index, place: value });
    };
 
-   const onCityChangeHandler = city => {
+   // we wrap the function with useCallback to prevent function from change
+   // because CitiesList component wrap with React.memo,
+   // React.memo save the component from render if props don't changed
+   const onCityChangeHandler = useCallback(city => {
       dispatch({ type: 'UPDATE_CITY', city: city });
-   };
+   }, []);
+
+   //    const onCityChangeHandler = city => {
+   //       dispatch({ type: 'UPDATE_CITY', city: city });
+   //    };
 
    const onDeletePlaceHandler = index => {
       dispatch({ type: 'DELETE_PLACE', index: index });
