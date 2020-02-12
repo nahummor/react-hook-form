@@ -24,6 +24,7 @@ const CitiesList = props => {
 
    return (
       <select
+         name='city'
          className={classes.citiesList}
          onChange={event => props.onCityChangeHandler(event.target.value)}>
          {cities}

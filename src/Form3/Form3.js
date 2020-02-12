@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import classes from './Form3.module.css';
 import CitiesList from '../Shared/UI/CitiesList/CitiesList';
 import useInput from '../Shared/hooks/useInput';
@@ -6,15 +6,19 @@ import useInput from '../Shared/hooks/useInput';
 function Form3() {
    const [firstName, bindFirstName, resetFirstName] = useInput('');
    const [lastName, bindLastName, resetLastName] = useInput('');
+   const [city, setCity] = useState('באר שבע');
 
    const onCityChangeHandler = useCallback(city => {
-      console.log(city);
+      console.log('City: ', city);
+      setCity(city);
    }, []);
 
    const onSubmitHandler = event => {
       event.preventDefault();
       console.log('First Name: ', firstName);
       console.log('Last Name: ', lastName);
+      console.log('City: ', city);
+
       resetFirstName();
       resetLastName();
    };
