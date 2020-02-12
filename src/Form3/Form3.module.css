@@ -1,0 +1,12 @@
+.personForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.personFormContainer {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-gap: 0.5rem;
+}
