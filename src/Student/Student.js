@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Yup from 'yup';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, useFieldArray } from 'react-hook-form';
 
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
@@ -9,10 +9,11 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
+import IconButton from '@material-ui/core/IconButton';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-
+import DeleteIcon from '@material-ui/icons/Delete';
 import classes from './Student.module.css';
 
 const formSchema = Yup.object().shape({
@@ -41,8 +42,14 @@ const Student = () => {
       validationSchema: formSchema
    });
 
+   const { fields, append, remove } = useFieldArray({
+      control: control,
+      name: 'places'
+   });
+
    const onSubmit = data => {
       console.log(data);
+
       // reset form fields
       reset({
          firstName: '',
@@ -53,13 +60,32 @@ const Student = () => {
       });
    };
 
+   const onAddPlaceHandler = () => {
+      append({ name: '' });
+   };
+
+   const placesEl = fields.map((place, index) => {
+      return (
+         <div key={place.id} className={classes.newPlaceRow}>
+            <FormControl>
+               <Input
+                  placeholder='מיקום חדש'
+                  name={`places[${index}].name`}
+                  inputRef={register()}
+               />
+            </FormControl>
+            <IconButton aria-label='delete' onClick={() => remove(index)}>
+               <DeleteIcon />
+            </IconButton>
+         </div>
+      );
+   });
+
    return (
       <div className={classes.studentContainer}>
-         <Card>
-            <CardContent>
-               <form
-                  onSubmit={handleSubmit(onSubmit)}
-                  className={classes.addNewStudentForm}>
+         <form onSubmit={handleSubmit(onSubmit)}>
+            <Card>
+               <CardContent className={classes.addNewStudentForm}>
                   <h2>New Student</h2>
                   <FormControl>
                      <InputLabel htmlFor='txtFirstName'>שם פרטי</InputLabel>
@@ -90,7 +116,7 @@ const Student = () => {
                            {errors.lastName.message}
                         </FormHelperText>
                      ) : (
-                        <FormHelperText id='txtLastName-text'>{' '}</FormHelperText>
+                        <FormHelperText id='txtLastName-text'> </FormHelperText>
                      )}
                   </FormControl>
                   <FormControl>
@@ -145,7 +171,7 @@ const Student = () => {
                         defaultValue={false}
                      />
                   </div>
-                  <div>
+                  <div className={classes.action}>
                      <Button
                         className={classes.actionButton}
                         type='submit'
@@ -154,10 +180,25 @@ const Student = () => {
                         disabled={!formState.isValid}>
                         הוספה
                      </Button>
+                     <Button
+                        onClick={onAddPlaceHandler}
+                        className={classes.actionButton}
+                        type='button'
+                        variant='contained'
+                        color='primary'
+                        title='הוספת מיקום חדש'>
+                        חדש
+                     </Button>
                   </div>
-               </form>
-            </CardContent>
-         </Card>
+               </CardContent>
+            </Card>
+            <Card className={classes.card}>
+               <CardContent className={classes.placesCardContent}>
+                  <h3>מיקומים</h3>
+                  {placesEl}
+               </CardContent>
+            </Card>
+         </form>
       </div>
    );
 };
